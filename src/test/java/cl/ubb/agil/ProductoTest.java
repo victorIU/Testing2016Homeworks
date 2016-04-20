@@ -33,8 +33,8 @@ public class ProductoTest {
 	public void isBajoStockConStockNegativo(){
 		Categoria categoria=new Categoria("cecinas","C01");
 		producto=new Producto("cecinas de perro",10,20,categoria);
-		
-		producto.stock=12;
+		//debería lanzar una excepción
+		producto.stock=-1;
 		boolean vof=producto.isBajoStock();
 		
 		assertFalse(vof);
