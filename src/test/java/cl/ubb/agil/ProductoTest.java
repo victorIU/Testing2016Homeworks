@@ -2,11 +2,12 @@ package cl.ubb.agil;
 
 import org.junit.Test;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.hamcrest.CoreMatchers.is;
 public class ProductoTest {
-	Categoria categoria=new Categoria("LessPaul","C01");
+	Categoria categoria=new Categoria("Guitar","0001");
 	Producto producto=new Producto("Gibson Less Paul",1,5,categoria);
 	Existencia existencia[]=new Existencia[5];
 	@Test
@@ -152,6 +153,85 @@ public class ProductoTest {
 	}
 	@Test
 	public void getCategoriaEntregaCategoriaCorrectamente(){
+		/*Arrange*/
+		producto=new Producto("Gibson Less Paul",1,5,categoria);
+		/*Act*/
+		Categoria category;
+		category=producto.getCategoria();
+		/*assert*/
+		assertEquals(producto.categoria,category);
+	}
+	@Test
+	public void setCategoriaConNombreValido(){
+		/*Arrange*/
+		producto=new Producto("Less Paul",1,5);
+		Categoria category=new Categoria("Guitar","0002");
+		/*Act*/
+		producto.setCategoria(category);
+		/*Assert*/
+		assertEquals(producto.categoria, category);
 		
 	}
+	public void setCategoriaConNombreInValido(){
+		/*Arrange*/
+		producto=new Producto("Less Paul",1,5);
+		Categoria category=new Categoria("Guitar","0002");
+		/*Act*/
+		producto.setCategoria(category);
+		/*Assert*/
+		assertEquals(producto.categoria, category);
+		
+	}
+	@Test
+	public void setNombreConNombreValido(){
+		/*Arrange*/
+		producto=new Producto("Less Paul",1,5);
+		/*Act*/
+		String name="SG";
+		producto.setNombre(name);
+		/*Assert*/
+		assertTrue(name.equals(producto.nombre));
+	}
+	@Test (expected=ExcepcionDeProducto.class)
+	public void getCodigoProximaExistenciaConStockIgualACero() throws ExcepcionDeProducto{
+		/*Arrange*/
+		producto=new Producto("Less Paul",1,5);
+		/*Act*/
+		producto.getCodigoProximaExistencia();
+		/*Assert*/
+		
+	}
+	@Test
+	public void getCodigoProximaExistenciaConStockMayorACeroYCategoriaNULL()throws ExcepcionDeProducto{
+		/*Arrange*/
+		producto=new Producto("Less Paul",1,5);
+		Existencia existencia=new Existencia("1");
+		/* Act */	
+		producto.existencias[0]=existencia;
+		producto.stock=1;
+		String s=producto.getCodigoProximaExistencia();
+		/*Assert*/
+		assertTrue(s.equals("XXXXX-1"));
+	}
+	@Test
+	public void getCodigoProximaExistenciaConStockMayorACeroYCategoriaNoNULL()throws ExcepcionDeProducto{
+		/*Arrange*/
+		producto=new Producto("Less Paul",1,5,categoria);
+		Existencia existencia=new Existencia("1");
+		/* Act */	
+		producto.existencias[0]=existencia;
+		producto.stock=1;
+		String s=producto.getCodigoProximaExistencia();
+		/*Assert*/
+		assertTrue(s.equals("0001-1"));
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
