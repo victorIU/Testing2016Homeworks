@@ -199,7 +199,6 @@ public class ProductoTest {
 		/*Act*/
 		producto.getCodigoProximaExistencia();
 		/*Assert*/
-		
 	}
 	@Test
 	public void getCodigoProximaExistenciaConStockMayorACeroYCategoriaNULL()throws ExcepcionDeProducto{
